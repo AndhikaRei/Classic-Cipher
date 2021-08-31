@@ -1,9 +1,6 @@
-import re
 from typing import List
 
-# 
-# alphabets is a string that represent all Indonesia alphabet.
-alphabets:str = "abcdefghijklmnopqrstuvwxyz"
+from Utility import alphabets
 
 class VigenereCipher:
     """
