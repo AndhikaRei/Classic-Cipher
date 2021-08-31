@@ -1,4 +1,5 @@
 import re
+import random
 from typing import List
 
 # 
@@ -26,8 +27,8 @@ class PlayfairCipher:
 
         Parameters
         ----------
-        key : str
-            Key for encrypting or decrypting a text.
+        key : str, optional
+            Key for encrypting or decrypting a text. If none, generate randomly.
         plaintext : str, optional
             Text you want to encrypt or ciphertext after decrypted.
         cipherthex : int, optional
@@ -55,10 +56,12 @@ class PlayfairCipher:
         self.key = key
         if (key != ""):
             self.key = self.normalizeKey(key)
+        else:
+            self.key = self.generateBasicPlayfairTable()
 
     def encrypt(self)->str:
         """
-        Method to encrypt current plaintext with current key.
+        Method to encrypt current plaintext with current key. Also modify ciphertext attribute.
         
         Return the capitalized ciphertext. 
         """
@@ -100,7 +103,7 @@ class PlayfairCipher:
     
     def decrypt(self)->str:
         """
-        Method to decrypt current ciphertext with current key. Modify plaintext attribute also
+        Method to decrypt current ciphertext with current key. Also modify plaintext attribute.
         
         Return the plaintext. 
         """
@@ -111,17 +114,37 @@ class PlayfairCipher:
 
         # Variable declaration.
         plaintext:str = ""
+        letter1:int
+        letter2:int
 
-        # Encrypt the plaintext. 
-        for (c,k) in zip(self.ciphertext, self.key):
-            plaintext = plaintext + alphabets[(alphabets.find(c)-alphabets.find(k))%26]
+        # Decrypt the ciphertext. 
+        for i in range (0, len(self.ciphertext), 2):
+
+            # Assign to variable
+            letter1 = self.key.find(self.ciphertext[i])
+            letter2 = self.key.find(self.ciphertext[i+1])
+
+            # 2 chars in the same row
+            if (letter1//5 == letter2//5):
+                plaintext += self.key[(letter1//5)*5 + ((letter1%5)-1)%5]
+                plaintext += self.key[(letter2//5)*5 + ((letter2%5)-1)%5]
+
+            # 2 chars in the same column
+            elif (letter1%5 == letter2%5):
+                plaintext += self.key[(letter1-5)%25]
+                plaintext += self.key[(letter2-5)%25]
+
+            # Other places
+            else:
+                plaintext += self.key[(letter1//5)*5 + letter2%5]
+                plaintext += self.key[(letter2//5)*5 + letter1%5]
         
         self.plaintext = plaintext
         return plaintext
 
 
     @staticmethod
-    def generateBasicPlayfairTable()->List[str]:
+    def generateBasicPlayfairTable()->str:
         """
         Method to generate normal Playfair Cipher encrypt table.
         
@@ -129,14 +152,21 @@ class PlayfairCipher:
         """
 
         # Variable declaration.
-        basicPlayfairTable:List[str] = []
+        basicPlayfairTable:str = ""
+        alph:str = alphabets
+        num:int
 
         # Loop to create Playfair Cipher table.
-        for i in range(26):
-            if (i==0):
-                basicPlayfairTable.append(alphabets)
-            else:
-                basicPlayfairTable.append(basicPlayfairTable[i-1][1:]+basicPlayfairTable[i-1][0])
+        for count in range(25, -1, -1):
+
+            # Generate random int
+            num = random.randint(0, count)
+
+            # Add new char to table
+            basicPlayfairTable += alph[num]
+
+            # Remove added char from alphabet
+            alph = alph[:num] + alph[num+1:]
         
         return basicPlayfairTable
 
@@ -207,7 +237,7 @@ class PlayfairCipher:
 # Test for normal.
 a = "temui ibu nanti malam"
 b = "alngeshpubcdfikmoqrtvwxyz"
-c = "LVVQHZNGFHRVL"
-d = PlayfairCipher(key=b, plaintext=a)
-print(d.encrypt())
-# print(d.key)
+c = "ZB RS FY KU PG LG RK VS NL QV"
+d = PlayfairCipher(key=b, ciphertext=c)
+# print(d.generateBasicPlayfairTable())
+print(d.decrypt())
