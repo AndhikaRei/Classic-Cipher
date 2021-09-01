@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<title>Vigenere Cipher</title>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+		<link href="../static/style/main.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="page-crypto">
+			<div class="d-flex" id="wrapper" data-aos="fade-right">
+				<!-- Sidebar -->
+				<div class="border-right" id="sidebar-wrapper">
+					<div class="sidebar-heading text-center">
+						<img src="../static/images/Crypto Logo.png" alt="" class="my-4 logo-crypto" />
+					</div>
+					<div class="list-group list-group-flush">
+						<a href="vigenere.html" class="list-group-item list-group-item-action"> Vigenere Cipher </a>
+						<a href="auto-key-vigenere.html" class="list-group-item list-group-item-action"> Auto-key Vigenere Cipher </a>
+						<a href="full-vigenere.html" class="list-group-item list-group-item-action"> Full Vigenere Cipher </a>
+						<a href="extended-vigenere.html" class="list-group-item list-group-item-action"> Extended Vigenere Cipher </a>
+						<a href="playfair.html" class="list-group-item list-group-item-action"> Playfair Cipher </a>
+						<a href="affine.html" class="list-group-item list-group-item-action active">Affine Cipher </a>
+						<a href="hill.html" class="list-group-item list-group-item-action">Hill Cipher </a>
+					</div>
+				</div>
+				<!-- /#sidebar-wrapper -->
+				<!-- Page Content -->
+				<div id="page-content-wrapper">
+					<nav class="navbar navbar-crypto navbar-expand-lg navbar-light fixed-top" data-aos="fade-down">
+						<button class="btn btn-secondary d-md-none mr-auto mr-2" id="menu-toggle"> &laquo; Menu </button>
+					</nav>
+					<div class="section-content section-dashboard-home" data-aos="fade-up">
+						<div class="container-fluid">
+							<div class="crypto-heading">
+								<h2 class="crypto-title">Affine Cipher</h2>
+								<p class="crypto-subtitle">an encryption function with additions and multiplication that code a letter into another with value (ax + b) modulo 26. </p>
+							</div>
+							<div class="crypto-content">
+								<ul class="nav nav-pills" id="cryptoTab" role="tablist">
+									<li class="nav-item" role="presentation">
+										<a class="nav-link active" id="encrypt-tab" data-toggle="tab" href="#encrypt" role="tab" aria-controls="encrypt" aria-selected="false">Encrypt</a>
+									</li>
+									<li class="nav-item" role="presentation">
+										<a class="nav-link" id="decrypt-tab" data-toggle="tab" href="#decrypt" role="tab" aria-controls="decrypt" aria-selected="true">Decrypt</a>
+									</li>
+								</ul>
+								<div class="tab-content" id="myTabContent">
+									<div class="tab-pane fade show active" id="encrypt" role="tabpanel" aria-labelledby="encrypt-tab">
+										<div class="row mt-3">
+											<div class="col-12 mt-2">
+												<form action="" enctype="multipart/form-data">
+													<div class="card">
+														<div class="card-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label for="file-plaintext">File Plaintext</label>
+																		<input type="file" accept=".txt" class="form-control pt-1" id="file-plaintext" aria-describedby="file-plaintext" name="file-plaintext" />
+																		<small class="text-muted"> Pilih file txt untuk plaintext - OPSIONAL </small>
+																	</div>
+																</div>
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label for="plaintext">Plaintext</label>
+																		<textarea name="plaintext" id="plaintext" cols="30" rows="4" class="form-control">
+                                		</textarea>
+																	</div>
+																</div>
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="keyM-encrypt">Key - M</label>
+																		<input type="number" class="form-control" id="keyM-encrypt" aria-describedby="keyM-encrypt" name="keyM" />
+																	</div>
+																</div>
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="keyB-encrypt">Key - B</label>
+																		<input type="number" class="form-control" id="keyB-encrypt" aria-describedby="keyB-encrypt" name="keyB" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-2">
+														<div class="col">
+															<button type="submit" class="btn btn-success btn-block px-5"> Encrypt Now </button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+										<div class="row my-4">
+											<div class="col-12">
+												<div class="card">
+													<div class="card-body" style="padding-bottom: 0.5rem;">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<label for="result-ciphertext">Ciphertext</label>
+																	<textarea name="result-ciphertext" readonly id="result-ciphertext" cols="30" rows="4" class="form-control">RESULTGOESHERE
+																	</textarea>
+																</div>
+																<div class="form-group">
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="radio" name="ciphertext-group" id="ciphertext-nospace" value="nospace" checked>
+																		<label class="form-check-label" for="ciphertext-nospace">Without space</label>
+																	</div>
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="radio" name="ciphertext-group" id="ciphertext-5" value="5">
+																		<label class="form-check-label" for="ciphertext-5">Five alphabet group</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row mt-2">
+													<div class="col">
+														<button id="download-ciphertext" onclick="downloadFile(resultCipher.value)" class="btn btn-secondary btn-block"> Download Ciphertext</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade show" id="decrypt" role="tabpanel" aria-labelledby="decrypt-tab">
+										<div class="row mt-3">
+											<div class="col-12 mt-2">
+												<form action="" enctype="multipart/form-data">
+													<div class="card">
+														<div class="card-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label for="thumbnails">File Ciphertext</label>
+																		<input type="file" accept=".txt" class="form-control pt-1" id="file-ciphertext" aria-describedby="file-plaintext" name="file-plaintext" />
+																		<small class="text-muted"> Pilih file txt untuk ciphertext - OPSIONAL </small>
+																	</div>
+																</div>
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label for="ciphertext">Ciphertext</label>
+																		<textarea name="ciphertext" id="ciphertext" cols="30" rows="4" class="form-control">
+                                		</textarea>
+																	</div>
+																</div>
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="keyM-decrypt">Key - M</label>
+																		<input type="number" class="form-control" id="keyM-decrypt" aria-describedby="keyM-decrypt" name="keyM" />
+																	</div>
+																</div>
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="keyB-decrypt">Key - B</label>
+																		<input type="number" class="form-control" id="keyB-decrypt" aria-describedby="keyB-decrypt" name="keyB" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-2">
+														<div class="col">
+															<button type="submit" class="btn btn-success btn-block px-5"> Decrypt Now </button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+										<div class="row my-4">
+											<div class="col-12">
+												<div class="card">
+													<div class="card-body" style="padding-bottom: 0.5rem;">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<label for="result-plaintext">Plaintext</label>
+																	<textarea name="result-plaintext" readonly id="result-plaintext" cols="30" rows="4" class="form-control">resultgoeshere
+																	</textarea>
+																</div>
+																<div class="form-group">
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="radio" name="plaintext-group" id="plaintext-nospace" value="nospace" checked>
+																		<label class="form-check-label" for="plaintext-nospace">Without space</label>
+																	</div>
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="radio" name="plaintext-group" id="plaintext-5" value="5">
+																		<label class="form-check-label" for="plaintext-5">Five alphabet group</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row mt-2">
+													<div class="col">
+														<button id="download-plaintext" class="btn btn-secondary btn-block" onclick="downloadFile(resultPlain.value)"> Download Plaintext</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /#page-content-wrapper -->
+			</div>
+		</div>
+		<!-- Bootstrap core JavaScript -->
+		<script src="../static/vendor/jquery/jquery.slim.min.js"></script>
+		<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+		<script>
+			AOS.init();
+		</script>
+		<!-- File utility -->
+		<script src="../static/script/utility.js"></script>
+		<!-- Menu Toggle Script -->
+		<script>
+			// For toggling sidebar.
+			$("#menu-toggle").click(function (e) {
+				e.preventDefault();
+				$("#wrapper").toggleClass("toggled");
+			});
+		</script>
+	</body>
+
+</html>
