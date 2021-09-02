@@ -203,3 +203,5 @@ def playfairDecrypt():
 """
 if __name__ == '__main__':
     app.run(debug=True,threaded=True)
+    #    f = open('D:/Kulyeah/sem 5/Kripto/Classic-Cipher/src/static/images/Crypto Logo.png', "rb")
+    # print(f.read())
