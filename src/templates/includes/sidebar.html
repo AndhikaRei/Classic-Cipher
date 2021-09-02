@@ -7,9 +7,9 @@
 		<a href="{{ url_for('vigenere') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'vigenere'}}"> Vigenere Cipher </a>
 		<a href="{{ url_for('autoKeyVigenere') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'key_vigenere'}}"> Auto-key Vigenere Cipher </a>
 		<a href="{{ url_for('fullKeyVigenere') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'full_vigenere'}}"> Full Vigenere Cipher </a>
-		<a href="extended-vigenere.html" class="list-group-item list-group-item-action {{ 'active' if active_page == 'extended_vigenere'}}"> Extended Vigenere Cipher </a>
+		<a href="{{ url_for('extendedVigenere') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'extended_vigenere'}}"> Extended Vigenere Cipher </a>
 		<a href="{{ url_for('playfair') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'playfair'}}"> Playfair Cipher </a>
 		<a href="{{ url_for('affine') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'affine'}}">Affine Cipher </a>
-		<a href="hill.html" class="list-group-item list-group-item-action {{ 'active' if active_page == 'hill'}}">Hill Cipher </a>
+		<a href="{{ url_for('hill') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'hill'}}">Hill Cipher </a>
 	</div>
 </div>

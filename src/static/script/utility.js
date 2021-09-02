@@ -85,7 +85,10 @@ filePlaintext.addEventListener('change', (event) => {
     }
     const fr = new FileReader();
     fr.onload = function () {     
-        plainText.value = fr.result.replace(/[\W_0-9]/g, '');
+        plainText.value = fr.result;
+        if (!plaintextInput){
+            plainText.value = fr.result.replace(/[\W_0-9]/g, '');
+        }
     }
     fr.readAsText(fileList[0]);
 });
@@ -99,8 +102,12 @@ fileCiphertext.addEventListener('change', (event) => {
     }
     const fr = new FileReader();
     fr.onload = function () {
-        const cipher = fr.result.replace(/[\W_0-9]/g, '');
-        cipherText.value = cipher.toUpperCase();
+        cipherText.value = fr.result;
+        if (!ciphertextInput){
+            const cipher = fr.result.replace(/[\W_0-9]/g, '');
+            cipherText.value = cipher.toUpperCase();
+        }
+        
     }
     fr.readAsText(fileList[0]);
 });

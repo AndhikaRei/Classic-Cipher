@@ -1,13 +1,13 @@
 {% extends 'layouts/base.html' %} 
-{% set active_page = 'hill' %}
+{% set active_page = 'extended_vigenere' %}
 
 {% block title %} 
-	Hill Cipher 
+	Vigenere Cipher 
 {% endblock %}
 
 {% block heading %} 
-	<h2 class="crypto-title">Hill Cipher</h2>
-	<p class="crypto-subtitle"> a ciphering system similar to affine cipher but using a coefficient matrix instead of 2 affine coefficients (gradient). </p> 
+		<h2 class="crypto-title">Extended Vigenere Cipher</h2>
+		<p class="crypto-subtitle"> poly-alphabetic substitution system that use a key and a double-entry table [256 Ascii Character] </p>
 {% endblock %}
 
 {% block content %}
@@ -26,7 +26,7 @@
 		<div class="tab-pane fade show {{ 'active' if encrypt }}" id="encrypt" role="tabpanel" aria-labelledby="encrypt-tab">
 			<div class="row mt-3">
 				<div class="col-12 mt-2">
-					<form action="/hill-cipher/encrypt" enctype="multipart/form-data" method="POST">
+					<form action="/extended-vigenere-cipher/encrypt" enctype="multipart/form-data" method="POST">
 						<div class="card">
 							<div class="card-body">
 								<div class="row">
@@ -42,12 +42,23 @@
 									{% endif %}
 									<div class="col-md-12">
 										<div class="form-group">
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" name="encrypt" id="encrypt-file"
+													value="file" checked>
+												<label class="form-check-label" for="encrypt-file">Encrypt File's value</label>
+											</div>
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" name="encrypt" id="encrypt-byte"
+													value="byte">
+												<label class="form-check-label" for="encrypt-byte">Encrypt File's byte</label>
+											</div>
+										</div>
+										<div class="form-group">
 											<label for="file-plaintext">File Plaintext</label>
 											<input type="file" accept=".txt" class="form-control pt-1" id="file-plaintext" aria-describedby="file-plaintext" name="file-plaintext" placeholder="hahahah"/>
-											<small class="text-muted"> Pilih file txt untuk plaintext - OPSIONAL </small>
 										</div>
 									</div>
-									<div class="col-md-12">
+									<div class="col-md-12" id="plaintext-forminput">
 										<div class="form-group">
 											<label for="plaintext">Plaintext</label>
 											<textarea name="plaintext" id="plaintext" cols="30" rows="4"
@@ -55,18 +66,16 @@
 										</div>
 									</div>
 									<div class="col-md-12">
-										<label for="">Key Matrix Input (r=row & c=column)</label>
-										{% for i in range (3) %}
-										<div class="row">
-											{% for j in range (3) %}
-											<div class="col">
-												<div class="form-group">
-													<input type="number" value="{{ form['r-'~(i+1)~'c-'~(j+1)] if form }}" name="{{'r-'~(i+1)~'c-'~(j+1)}}" class="form-control" placeholder="{{'r-'~(i+1)~'c-'~(j+1)}}">
-												</div>
-											</div>
-											{% endfor %}
+										<div class="form-group">
+											<label for="key-encrypt">Key</label>
+											{% if result_ciphertext %}
+												<textarea name="key" id="key-encrypt" cols="30" rows="4"class="form-control">{{ result_ciphertext.key }}</textarea>
+											{% elif form %}
+												<textarea name="key" id="key-encrypt" cols="30" rows="4"class="form-control">{{ form.key }}</textarea>
+											{% else %}
+												<textarea name="key" id="key-encrypt" cols="30" rows="4"class="form-control"></textarea>
+											{% endif %}
 										</div>
-										{% endfor %}
 									</div>
 								</div>
 							</div>
@@ -120,7 +129,7 @@
 		<div class="tab-pane fade show {{ 'active' if not encrypt }}" id="decrypt" role="tabpanel" aria-labelledby="decrypt-tab">
 			<div class="row mt-3">
 				<div class="col-12 mt-2">
-					<form action="/hill-cipher/decrypt" enctype="multipart/form-data" method="POST">
+					<form action="/extended-vigenere-cipher/decrypt" enctype="multipart/form-data" method="POST">
 						<div class="card">
 							<div class="card-body">
 								<div class="row">
@@ -136,13 +145,24 @@
 									{% endif %}
 									<div class="col-md-12">
 										<div class="form-group">
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" name="decrypt" id="decrypt-file"
+													value="file" checked>
+												<label class="form-check-label" for="decrypt-file">Decrypt File's value</label>
+											</div>
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" name="decrypt" id="decrypt-byte"
+													value="byte">
+												<label class="form-check-label" for="decrypt-byte">Decrypt File's byte</label>
+											</div>
+										</div>
+										<div class="form-group">
 											<label for="thumbnails">File Ciphertext</label>
 											<input type="file" accept=".txt" class="form-control pt-1" id="file-ciphertext"
 												aria-describedby="file-plaintext" name="file-plaintext" />
-											<small class="text-muted"> Pilih file txt untuk ciphertext - OPSIONAL </small>
 										</div>
 									</div>
-									<div class="col-md-12">
+									<div class="col-md-12" id="ciphertext-forminput">
 										<div class="form-group">
 											<label for="ciphertext">Ciphertext</label>
 											<textarea name="ciphertext" id="ciphertext" cols="30" rows="4"
@@ -150,18 +170,16 @@
 										</div>
 									</div>
 									<div class="col-md-12">
-										<label for="">Key Matrix Input (r=row & c=column)</label>
-										{% for i in range (3) %}
-										<div class="row">
-											{% for j in range (3) %}
-											<div class="col">
-												<div class="form-group">
-													<input type="number" value="{{ form['r-'~(i+1)~'c-'~(j+1)] if form }}" name="{{'r-'~(i+1)~'c-'~(j+1)}}" class="form-control" placeholder="{{'r-'~(i+1)~'c-'~(j+1)}}">
-												</div>
-											</div>
-											{% endfor %}
+										<div class="form-group">
+											<label for="key-decrypt">Key</label>
+											{% if result_plaintext %}
+												<textarea name="key" id="key-decrypt" cols="30" rows="4"class="form-control">{{ result_plaintext.key }}</textarea>
+											{% elif form %}
+												<textarea name="key" id="key-decrypt" cols="30" rows="4"class="form-control">{{ form.key }}</textarea>
+											{% else %}
+												<textarea name="key" id="key-decrypt" cols="30" rows="4"class="form-control"></textarea>
+											{% endif %}	
 										</div>
-										{% endfor %}
 									</div>
 								</div>
 							</div>

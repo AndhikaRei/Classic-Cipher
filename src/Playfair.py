@@ -259,10 +259,10 @@ class PlayfairCipher:
         return matrix
 
 
-# Test for normal.
-a = "temui ibu nanti malam"
-b = "alngeshpubcdfikmoqrtvwxyz"
-c = "ZB RS FY KU PG LG RK VS NL QV"
-d = PlayfairCipher(key=b, ciphertext=c)
-# print(d.generateBasicPlayfairTable())
-print(d.decrypt())
+# # Test for normal.
+# a = "temui ibu nanti malam"
+# b = "alngeshpubcdfikmoqrtvwxyz"
+# c = "ZB RS FY KU PG LG RK VS NL QV"
+# d = PlayfairCipher(key=b, ciphertext=c)
+# # print(d.generateBasicPlayfairTable())
+# print(d.decrypt())

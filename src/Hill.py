@@ -186,9 +186,7 @@ class HillCipher:
 
 
 # Test for Hill.
-a = "kripto"
-b = 10
-m = 7
-x = "CZOLNE"
-d = HillCipher(m=m, plaintext="", ciphertext=x)
-print(d.decrypt())
+a = "paymoremoney"
+m = [[17,17,5],[21,18,21],[2,2,19]]
+d = HillCipher(m=m, plaintext=a, ciphertext="")
+print(d.encrypt())
