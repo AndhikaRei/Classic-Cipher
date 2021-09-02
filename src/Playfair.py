@@ -234,6 +234,31 @@ class PlayfairCipher:
 
         return normalizedKey
 
+    def keyToMatrix(self)-> list:
+        """
+        Method to transform string key to matrix.
+        
+        Return the matrix key. 
+        
+        """
+
+        # Variable declaration.
+        matrix = [["" for i in range (5)] for j in range (5)]
+        i:int = 0
+
+        # Loop for each letter
+        for j in range (25):
+
+            # Put to matrix
+            matrix[i][j%5] = self.key[j]
+
+            # Next row
+            if (j % 5 == 4):
+                i += 1
+        
+        return matrix
+
+
 # Test for normal.
 a = "temui ibu nanti malam"
 b = "alngeshpubcdfikmoqrtvwxyz"
