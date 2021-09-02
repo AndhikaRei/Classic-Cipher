@@ -9,7 +9,7 @@
 		<a href="{{ url_for('fullKeyVigenere') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'full_vigenere'}}"> Full Vigenere Cipher </a>
 		<a href="extended-vigenere.html" class="list-group-item list-group-item-action {{ 'active' if active_page == 'extended_vigenere'}}"> Extended Vigenere Cipher </a>
 		<a href="{{ url_for('playfair') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'playfair'}}"> Playfair Cipher </a>
-		<a href="affine.html" class="list-group-item list-group-item-action {{ 'active' if active_page == 'affine'}}">Affine Cipher </a>
+		<a href="{{ url_for('affine') }}" class="list-group-item list-group-item-action {{ 'active' if active_page == 'affine'}}">Affine Cipher </a>
 		<a href="hill.html" class="list-group-item list-group-item-action {{ 'active' if active_page == 'hill'}}">Hill Cipher </a>
 	</div>
 </div>

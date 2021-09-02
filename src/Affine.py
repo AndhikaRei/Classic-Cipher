@@ -131,5 +131,5 @@ a = "kripto"
 b = 10
 m = 7
 x = "CZOLNE"
-d = AffineCipher(b=b, m=m, plaintext="", ciphertext=x)
-print(d.decrypt())
+d = AffineCipher(b=b, m=m, plaintext=a, ciphertext="")
+print(d.encrypt())
