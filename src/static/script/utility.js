@@ -19,9 +19,6 @@ const resultPlain = document.getElementById('result-plaintext');
 // Capture Grouping result radio Button element
 const ciphertextNoSpace = document.getElementById('ciphertext-nospace');
 const ciphertext5 = document.getElementById('ciphertext-5');
-const plaintextNoSpace = document.getElementById('plaintext-nospace');
-const plaintext5 = document.getElementById('plaintext-5');
-
 
 // Capture file and byte uploading (only used in extended vigenere page) and it's related element.
 const radioEncFile = document.getElementById('encrypt-file');
@@ -30,7 +27,6 @@ const radioDecFile = document.getElementById('decrypt-file');
 const radioDecByte = document.getElementById('decrypt-byte');
 const plaintextInput = document.getElementById('plaintext-forminput');
 const ciphertextInput = document.getElementById('ciphertext-forminput');
-
 
 /*--------------------------------------------------------------
 # Function and Procedure declaration
@@ -110,19 +106,16 @@ fileCiphertext.addEventListener('change', (event) => {
 });
 
 // Add event listener for grouping result.
-plaintextNoSpace.addEventListener("click", () => {
-    resultPlain.value = noSpaceGrouping(resultPlain.value);
-});
-ciphertextNoSpace.addEventListener("click", () => {
-    resultCipher.value = noSpaceGrouping(resultCipher.value);
-});
-plaintext5.addEventListener("change", () => {
-    resultPlain.value = fiveCharGrouping(resultPlain.value);
-});
-ciphertext5.addEventListener("change", () => {
-    resultCipher.value = fiveCharGrouping(resultCipher.value);
-});
-
+if (ciphertextNoSpace) {
+    ciphertextNoSpace.addEventListener("click", () => {
+        resultCipher.value = noSpaceGrouping(resultCipher.value);
+    });
+}
+if (ciphertext5) {
+    ciphertext5.addEventListener("change", () => {
+        resultCipher.value = fiveCharGrouping(resultCipher.value);
+    });
+}
 
 // Add event listener for extended vigenere cipher page.
 if (radioEncFile){

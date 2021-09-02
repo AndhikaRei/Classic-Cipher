@@ -1,5 +1,10 @@
 @ECHO OFF
+ECHO Setting up virtual environment...
 CD src
+python -m venv virt
+ECHO Installing requirements...
 CALL virt\Scripts\activate
-explorer "http://localhost:5000"
-python app.py
+pip install -r requirements.txt
+ECHO Setup complete, running app...
+CD ..
+CALL run

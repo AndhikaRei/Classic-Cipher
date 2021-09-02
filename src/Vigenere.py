@@ -1,4 +1,6 @@
 from typing import List
+import random
+
 
 from Utility import alphabets
 
@@ -119,7 +121,25 @@ class VigenereCipher:
                 basicVigenereTable.append(basicVigenereTable[i-1][1:]+basicVigenereTable[i-1][0])
         
         return basicVigenereTable
-
+    
+    @staticmethod
+    def generateRandomVigenereTable()->List[str]:
+        """
+        Method to generate random Vigenere Cipher encrypt table.
+        
+        Return the List of string representing random Vigenere Cipher encrypt table. 
+        """
+        
+        # Variable declaration.
+        randomVigenereTable:List[str] =  VigenereCipher.generateBasicVigenereTable()
+        
+        # Loop to create Vigenere Cipher table.
+        for i in range(26):
+            n1 = random.randint(0,25)
+            n2 = random.randint(0,25)
+            randomVigenereTable[n1], randomVigenereTable[n2] = randomVigenereTable[n2], randomVigenereTable[n1]
+    
+        return randomVigenereTable
 
     @staticmethod
     def normalizeText(text:str)-> str:
