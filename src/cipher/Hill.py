@@ -1,3 +1,4 @@
+import random
 from Utility import alphabets, modularInverse
 
 class HillCipher:
@@ -49,6 +50,33 @@ class HillCipher:
         self.m = m
 
     @staticmethod
+    def generateBasicHillTable()->str:
+        """
+        Method to generate normal Hill Cipher encrypt table.
+        
+        Return the List of string representing normal ill Cipher encrypt table. 
+        """
+
+        # Variable declaration.
+        basicHillTable:list = []
+        templist:list = []
+        num:int
+
+        # Loop to create Playfair Cipher table.
+        for i in range(9):
+
+            # Generate random int
+            num = random.randint(0, 25)
+            templist.append(num)
+
+            # Add new int to table
+            if (i % 3 == 2):
+                basicHillTable.append(templist)
+                templist = []
+        
+        return basicHillTable
+
+    @staticmethod
     def normalizeText(text:str)-> str:
         """
         Method to normalize text by removing space and punctuation.
@@ -83,7 +111,6 @@ class HillCipher:
         ciphertext:str = ""
 
         # Encrypt the plaintext. 
-        ordo = (len(self.m))**0.5
         for i in range (0, len(self.plaintext), 3):
 
             # Find value of p1 p2 p3
@@ -92,9 +119,9 @@ class HillCipher:
             p3 = alphabets.find(self.plaintext[i+2])
 
             # Find it's corresponding cipher value
-            ciphertext += alphabets[((self.m[0]*p1 + self.m[1]*p2 + self.m[2]*p3)%26)]
-            ciphertext += alphabets[((self.m[3]*p1 + self.m[4]*p2 + self.m[5]*p3)%26)]
-            ciphertext += alphabets[((self.m[6]*p1 + self.m[7]*p2 + self.m[8]*p3)%26)]
+            ciphertext += alphabets[((self.m[0][0]*p1 + self.m[0][1]*p2 + self.m[0][2]*p3)%26)]
+            ciphertext += alphabets[((self.m[1][0]*p1 + self.m[1][1]*p2 + self.m[1][2]*p3)%26)]
+            ciphertext += alphabets[((self.m[2][0]*p1 + self.m[2][1]*p2 + self.m[2][2]*p3)%26)]
         
         self.ciphertext = ciphertext
         return ciphertext.upper()
@@ -112,11 +139,40 @@ class HillCipher:
 
         # Variable declaration.
         plaintext:str = ""
+        minor = [[0 for i in range (3)] for j in range (3)]
+        mInverse = [[0 for i in range (3)] for j in range (3)]
+        det:int = 0
 
-        # Encrypt the plaintext. 
-        modInverse = modularInverse(self.m, 26)
-        for c in self.ciphertext:
-            plaintext = plaintext + alphabets[(modInverse*(alphabets.find(c)-self.b))%26]
+        # Find minor entry matrix.
+        for i in range (3):
+            for j in range(3):
+                minor[i][j] = ((-1)**(i+j)) * (self.m[(i+1)%3][(j+1)%3] * self.m[(i+2)%3][(j+2)%3] - self.m[(i+1)%3][(j+2)%3] * self.m[(i+2)%3][(j+1)%3])
+        
+        # Find determinant.
+        for i in range (3):
+            det += ((-1)**i) * self.m[0][i]*minor[0][i]
+        
+        # Find modular inverse determinant.
+        det %= 26
+        detInverse = modularInverse(det, 26)
+
+        # Find modular inverse matrix
+        for i in range (3):
+            for j in range(3):
+                mInverse[j][i] = (minor[i][j] * detInverse) % 26
+
+        # Decrypt the ciphertext.
+        for i in range (0, len(self.ciphertext), 3):
+
+            # Find value of c1 c2 c3
+            c1 = alphabets.find(self.ciphertext[i])
+            c2 = alphabets.find(self.ciphertext[i+1])
+            c3 = alphabets.find(self.ciphertext[i+2])
+
+            # Find it's corresponding plain value
+            plaintext += alphabets[((mInverse[0][0]*c1 + mInverse[0][1]*c2 + mInverse[0][2]*c3)%26)]
+            plaintext += alphabets[((mInverse[1][0]*c1 + mInverse[1][1]*c2 + mInverse[1][2]*c3)%26)]
+            plaintext += alphabets[((mInverse[2][0]*c1 + mInverse[2][1]*c2 + mInverse[2][2]*c3)%26)]
         
         self.plaintext = plaintext
         return plaintext
