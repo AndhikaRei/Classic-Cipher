@@ -91,9 +91,16 @@ class HillCipher:
 
         # Variable declaration.
         normalizedText:str
+        tail:int
         
         # Remove number, punctuation, and space.
         normalizedText = "".join(filter(str.isalpha, text)).lower()
+
+        # Add dummy "x" char
+        tail = len(normalizedText) % 3
+        if (tail != 0):
+            normalizedText += "x" * (3-tail)
+            
         return normalizedText  
     
     def encrypt(self)->str:
