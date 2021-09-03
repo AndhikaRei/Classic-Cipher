@@ -1,7 +1,5 @@
 from typing import List
 import random
-
-
 from Utility import alphabets
 
 class VigenereCipher:
@@ -399,7 +397,7 @@ class ExtendedVigenereCipher:
         Key for encrypting or decrypting a text. 
     """
 
-    def __init__(self, key:str, plaintext: str ="", ciphertext:str="") -> None:
+    def __init__(self, key:str, plaintext: any ="", ciphertext:any="") -> None:
         """
         Constructor for VigenereCipher class. Either plaintext or ciphertext must be empty at 
         creation.
@@ -475,8 +473,25 @@ class ExtendedVigenereCipher:
         
         self.ciphertext = ciphertext
         return ciphertext
-
     
+    def encryptByte(self)->bytearray:
+        """
+        Method to encrypt plaintext with current key as byte array. 
+        
+        Return the ciphertext in byte array. 
+        """
+
+        # Variable declaration.
+        ciphertext:bytearray = self.plaintext
+
+        # Encrypt the plaintext. 
+        for index, values in enumerate(ciphertext):
+            ciphertext[index] = ((values + ord(self.key[index]))%256)
+        
+        self.ciphertext = ciphertext
+        return ciphertext
+
+
     def decrypt(self)->str:
         """
         Method to decrypt current ciphertext with current key. Modify plaintext attribute also
@@ -491,9 +506,26 @@ class ExtendedVigenereCipher:
         # Variable declaration.
         plaintext:str = ""
 
-        # Encrypt the plaintext. 
+        # Decrypt the plaintext. 
         for (c,k) in zip(self.ciphertext, self.key):
             plaintext = plaintext + chr((ord(c) - ord(k)) % 256)
+        
+        self.plaintext = plaintext
+        return plaintext
+    
+    def decryptByte(self)->bytearray:
+        """
+        Method to decrypt current bytearray ciphertext with current key. Modify plaintext attribute also
+        
+        Return the plaintext. 
+        """
+
+        # Variable declaration.
+        plaintext:bytearray = self.ciphertext
+
+        # Decrypt the plaintext. 
+        for index, values in enumerate(plaintext):
+            plaintext[index] = ((values - ord(self.key[index]))%256)
         
         self.plaintext = plaintext
         return plaintext

@@ -240,12 +240,10 @@ def extendedVigenereEncrypt():
 				file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
 					# Encrypt isi filenya dan simpen ke dalam file di tempat yg sama kek upload.
-					extendedVigenere = ExtendedVigenereCipher(key=key, plaintext=f.read().decode('utf-8'))
-					print(f.read())
-
+					extendedVigenere = ExtendedVigenereCipher(key=key, plaintext=bytearray(f.read()))
+				
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "wb") as f:
-					f.write(bytearray(extendedVigenere.encrypt(), 'utf-8'))
-					file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
+					f.write(extendedVigenere.encryptByte())
 					# Ntar file hasil encrypt yang di save namanya harus berbeda terus di download.
 					# Kalo misal bisa langsung rewrite file nya tanpa harus save file baru lebih bagus si. Ntar kalo gini nama filenya sama gpp.
 					
@@ -285,12 +283,10 @@ def extendedVigenereDecrypt():
 				file.stream.seek(0)
 				file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
-					extendedVigenere = ExtendedVigenereCipher(key=key, ciphertext=str(f.read().decode('utf-8')))
-					print(f.read())
+					extendedVigenere = ExtendedVigenereCipher(key=key, ciphertext=bytearray(f.read()))
 
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "wb") as f:
-					f.write(bytearray(extendedVigenere.decrypt(), 'utf-8'))
-					file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
+					f.write(extendedVigenere.decryptByte())
 					# Decrypt isi filenya dan simpen ke dalam file di tempat yg sama kek upload.
 					# Ntar file hasil decrypt yang di save namanya harus berbeda terus di download.
 					# Kalo misal bisa langsung rewrite file nya tanpa harus save file baru lebih bagus si. Ntar kalo gini nama filenya sama gpp.
@@ -474,7 +470,7 @@ def hillDecrypt():
 			ciphertext = request.form['ciphertext']
 			# Process Decrypt Hill Cipher.
 			hill = HillCipher(m=matrixKey, ciphertext=ciphertext)
-			print(hill.decrypt())
+			
 			# Render successfull webpage with data.
 			return render_template('pages/hill-cipher.html', encrypt=False, result_plaintext = hill, 
 				form = request.form)
@@ -494,5 +490,4 @@ def hillDecrypt():
 """
 if __name__ == '__main__':
 	app.run(debug=True,threaded=True)
-	#    f = open('D:/Kulyeah/sem 5/Kripto/Classic-Cipher/src/static/images/Crypto Logo.png', "rb")
-	# print(f.read())
+
