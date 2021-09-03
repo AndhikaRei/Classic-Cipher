@@ -1,5 +1,5 @@
 import random
-from Utility import alphabets, modularInverse
+from Utility import alphabets, modularInverse, relativePrime
 
 class HillCipher:
     """
@@ -161,6 +161,9 @@ class HillCipher:
         
         # Find modular inverse determinant.
         det %= 26
+        if (not relativePrime(det, 26)):
+            raise Exception("m must be relative prime with 26, eg (1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25).)")
+            
         detInverse = modularInverse(det, 26)
 
         # Find modular inverse matrix
