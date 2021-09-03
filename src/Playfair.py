@@ -153,7 +153,7 @@ class PlayfairCipher:
 
         # Variable declaration.
         basicPlayfairTable:str = ""
-        alph:str = alphabets
+        alph:str = alphabets[:9] + alphabets[10:]
         num:int
 
         # Loop to create Playfair Cipher table.
