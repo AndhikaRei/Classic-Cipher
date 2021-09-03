@@ -229,7 +229,7 @@ class PlayfairCipher:
 
         # Complete the key with the rest of alphabet
         for letter in alphabets:
-            if letter not in normalizedKey:
+            if (letter not in normalizedKey and letter !='j'):
                 normalizedKey += letter
 
         return normalizedKey

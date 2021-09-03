@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, current_app
 from werkzeug.datastructures import FileStorage
 
 from Playfair import PlayfairCipher
@@ -10,7 +10,7 @@ from Utility import alphabets
 
 # Flask Configuration.
 app = Flask(__name__)
-UPLOAD_FOLDER = './static'
+UPLOAD_FOLDER = './static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = 'mysecret'
 
@@ -237,15 +237,15 @@ def extendedVigenereEncrypt():
 				file = request.files['file-plaintext']
 				# Save the file to local and then open it.
 				file.stream.seek(0)
-				file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-				with open(os.path.join(app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
+				file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
+				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
 					# Encrypt isi filenya dan simpen ke dalam file di tempat yg sama kek upload.
 					# Ntar file hasil encrypt yang di save namanya harus berbeda terus di download.
 					# Kalo misal bisa langsung rewrite file nya tanpa harus save file baru lebih bagus si. Ntar kalo gini nama filenya sama gpp.
 					print(f.read())
 
 				# Download The file.
-				return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), file.filename, as_attachment=True)
+				return send_from_directory(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER']), file.filename, as_attachment=True)
 		except (Exception) as e:
 			# Render error webpage.
 			return render_template('pages/extended-vigenere-cipher.html', encrypt=True,
@@ -277,15 +277,15 @@ def extendedVigenereDecrypt():
 				file = request.files['file-ciphertext']
 				# Save the file to local and then open it.
 				file.stream.seek(0)
-				file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-				with open(os.path.join(app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
+				file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
+				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
 					# Decrypt isi filenya dan simpen ke dalam file di tempat yg sama kek upload.
 					# Ntar file hasil decrypt yang di save namanya harus berbeda terus di download.
 					# Kalo misal bisa langsung rewrite file nya tanpa harus save file baru lebih bagus si. Ntar kalo gini nama filenya sama gpp.
 					print(f.read())
 				
 				# Download The file.
-				return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), file.filename, as_attachment=True)
+				return send_from_directory(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER']), file.filename, as_attachment=True)
 
 		except (Exception) as e:
 			# Rende error webpage.
@@ -318,7 +318,7 @@ def playfairEncrypt():
 			playfair = PlayfairCipher(key=key, plaintext=plaintext)
 			playfair.encrypt()
 			return render_template('pages/playfair-cipher.html', encrypt=True,
-				result_ciphertext = playfair, form = request.form)
+				result_ciphertext = playfair, form = request.form, matrix = playfair.keyToMatrix())
 				# Render successfull webpage with data.
 		except (Exception) as e:
 			# Rende error webpage.
@@ -341,7 +341,7 @@ def playfairDecrypt():
 			playfair = PlayfairCipher(key=key, ciphertext=ciphertext)
 			playfair.decrypt()
 			return render_template('pages/playfair-cipher.html', encrypt=False,
-				result_plaintext = playfair, form = request.form)
+				result_plaintext = playfair, form = request.form, matrix = playfair.keyToMatrix())
 		except (Exception) as e:
 			return render_template('pages/playfair-cipher.html', encrypt=False,
 				error = e, form = request.form)

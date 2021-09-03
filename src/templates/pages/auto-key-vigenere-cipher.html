@@ -58,11 +58,11 @@
 										<div class="form-group">
 											<label for="key-encrypt">Key</label>
 											{% if result_ciphertext %}
-												<input pattern="[a-z]+" oninvalid="setCustomValidity('You are only allowed to input a-z')" type="text" class="form-control" id="key-encrypt" aria-describedby="name" name="key" value="{{ result_ciphertext.key }}"/>
+												<input pattern="[a-zA-Z ]+"  oninput="setCustomValidity('')" oninvalid="setCustomValidity('You are only allowed to input alphabet')" type="text" class="form-control" id="key-encrypt" aria-describedby="name" name="key" value="{{ result_ciphertext.key }}"/>
 											{% elif form %}
-												<input pattern="[a-z]+" oninvalid="setCustomValidity('You are only allowed to input a-z')" type="text" class="form-control" id="key-encrypt" aria-describedby="name" name="key" value="{{ form.key }}"/>
+												<input pattern="[a-zA-Z ]+"  oninput="setCustomValidity('')" oninvalid="setCustomValidity('You are only allowed to input alphabet')" type="text" class="form-control" id="key-encrypt" aria-describedby="name" name="key" value="{{ form.key }}"/>
 											{% else %}
-												<input pattern="[a-z]+" oninvalid="setCustomValidity('You are only allowed to input a-z')" type="text" class="form-control" id="key-encrypt" aria-describedby="name" name="key"/>
+												<input pattern="[a-zA-Z ]+"  oninput="setCustomValidity('')" oninvalid="setCustomValidity('You are only allowed to input alphabet')" type="text" class="form-control" id="key-encrypt" aria-describedby="name" name="key"/>
 											{% endif %}
 										</div>
 									</div>
@@ -151,11 +151,11 @@
 										<div class="form-group">
 											<label for="key-decrypt">Key</label>
 											{% if result_plaintext %}
-												<input pattern="[a-z]+" oninvalid="setCustomValidity('You are only allowed to input a-z')" type="text" class="form-control" id="key-decrypt" aria-describedby="name" name="key" value="{{ result_plaintext.key }}"/>
+												<input pattern="[a-zA-Z ]+"  oninput="setCustomValidity('')" oninvalid="setCustomValidity('You are only allowed to input alphabet')" type="text" class="form-control" id="key-decrypt" aria-describedby="name" name="key" value="{{ result_plaintext.key }}"/>
 											{% elif form %}
-												<input pattern="[a-z]+" oninvalid="setCustomValidity('You are only allowed to input a-z')" type="text" class="form-control" id="key-decrypt" aria-describedby="name" name="key" value="{{ form.key }}"/>
+												<input pattern="[a-zA-Z ]+"  oninput="setCustomValidity('')" oninvalid="setCustomValidity('You are only allowed to input alphabet')" type="text" class="form-control" id="key-decrypt" aria-describedby="name" name="key" value="{{ form.key }}"/>
 											{% else %}
-												<input pattern="[a-z]+" oninvalid="setCustomValidity('You are only allowed to input a-z')" type="text" class="form-control" id="key-decrypt" aria-describedby="name" name="key"/>
+												<input pattern="[a-zA-Z ]+"  oninput="setCustomValidity('')" oninvalid="setCustomValidity('You are only allowed to input alphabet')" type="text" class="form-control" id="key-decrypt" aria-describedby="name" name="key"/>
 											{% endif %}
 										</div>
 									</div>
