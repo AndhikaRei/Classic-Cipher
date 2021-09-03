@@ -240,11 +240,11 @@ def extendedVigenereEncrypt():
 				file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
 					# Encrypt isi filenya dan simpen ke dalam file di tempat yg sama kek upload.
-					extendedVigenere = ExtendedVigenereCipher(key=key, plaintext=str(f.read()))
+					extendedVigenere = ExtendedVigenereCipher(key=key, plaintext=f.read().decode('utf-8'))
 					print(f.read())
 
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "wb") as f:
-					f.write(bytearray(extendedVigenere.encrypt().encode('ascii')))
+					f.write(bytearray(extendedVigenere.encrypt(), 'utf-8'))
 					file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
 					# Ntar file hasil encrypt yang di save namanya harus berbeda terus di download.
 					# Kalo misal bisa langsung rewrite file nya tanpa harus save file baru lebih bagus si. Ntar kalo gini nama filenya sama gpp.
@@ -285,11 +285,11 @@ def extendedVigenereDecrypt():
 				file.stream.seek(0)
 				file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
-					extendedVigenere = ExtendedVigenereCipher(key=key, ciphertext=str(f.read()))
+					extendedVigenere = ExtendedVigenereCipher(key=key, ciphertext=str(f.read().decode('utf-8')))
 					print(f.read())
 
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "wb") as f:
-					f.write(bytearray(extendedVigenere.decrypt().encode('ascii')))
+					f.write(bytearray(extendedVigenere.decrypt(), 'utf-8'))
 					file.save(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename))
 					# Decrypt isi filenya dan simpen ke dalam file di tempat yg sama kek upload.
 					# Ntar file hasil decrypt yang di save namanya harus berbeda terus di download.
