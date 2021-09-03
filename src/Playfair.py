@@ -224,6 +224,9 @@ class PlayfairCipher:
         # Remove number, punctuation, and space.
         normalizedKey = "".join(filter(str.isalpha, key)).lower()
 
+        # Remove duplicates string
+        normalizedKey = "".join(set(normalizedKey))
+
         # Remove char "j"
         normalizedKey.replace("j", "")
 

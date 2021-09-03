@@ -239,7 +239,7 @@ def extendedVigenereEncrypt():
 				file.stream.seek(0)
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
 					# Encrypt isi filenya dan simpen ke dalam file di tempat yg sama kek upload.
-					extendedVigenere = ExtendedVigenereCipher(key=key, plaintext=str(f.read))
+					extendedVigenere = ExtendedVigenereCipher(key=key, plaintext=str(f.read()))
 					print(f.read())
 
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "wb") as f:
@@ -283,7 +283,7 @@ def extendedVigenereDecrypt():
 				# Save the file to local and then open it.
 				file.stream.seek(0)
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "rb") as f:
-					extendedVigenere = ExtendedVigenereCipher(key=key, ciphertext=str(f.read))
+					extendedVigenere = ExtendedVigenereCipher(key=key, ciphertext=str(f.read()))
 					print(f.read())
 
 				with open(os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'], file.filename), "wb") as f:
