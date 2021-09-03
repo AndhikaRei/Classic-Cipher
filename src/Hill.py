@@ -153,11 +153,11 @@ class HillCipher:
         # Find minor entry matrix.
         for i in range (3):
             for j in range(3):
-                minor[i][j] = ((-1)**(i+j)) * (self.m[(i+1)%3][(j+1)%3] * self.m[(i+2)%3][(j+2)%3] - self.m[(i+1)%3][(j+2)%3] * self.m[(i+2)%3][(j+1)%3])
+                minor[i][j] = (self.m[(i+1)%3][(j+1)%3] * self.m[(i+2)%3][(j+2)%3] - self.m[(i+1)%3][(j+2)%3] * self.m[(i+2)%3][(j+1)%3])
         
         # Find determinant.
         for i in range (3):
-            det += ((-1)**i) * self.m[0][i]*minor[0][i]
+            det += self.m[0][i]*minor[0][i]
         
         # Find modular inverse determinant.
         det %= 26
@@ -166,7 +166,7 @@ class HillCipher:
         # Find modular inverse matrix
         for i in range (3):
             for j in range(3):
-                mInverse[j][i] = (minor[i][j] * detInverse) % 26
+                mInverse[j][i] = ((minor[i][j]%26) * detInverse) % 26
 
         # Decrypt the ciphertext.
         for i in range (0, len(self.ciphertext), 3):
@@ -187,6 +187,7 @@ class HillCipher:
 
 # Test for Hill.
 a = "paymoremoney"
-m = [[17,17,5],[21,18,21],[2,2,19]]
-d = HillCipher(m=m, plaintext=a, ciphertext="")
-print(d.encrypt())
+b = "JWJNMLSEQPIB"
+m = [[1,2,8],[6,4,4],[2,8,9]]
+d = HillCipher(m=m, plaintext="", ciphertext=b)
+print(d.decrypt())
