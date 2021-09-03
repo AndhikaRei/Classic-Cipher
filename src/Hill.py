@@ -37,6 +37,8 @@ class HillCipher:
             raise Exception("Either plaintext or ciphertext must be filled")
         if (m == None):
             raise Exception("Key must be filled!")
+        if (not relativePrime(self.determinantMatrix(m), 26)):
+            raise Exception("m must be relative prime with 26, eg (1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25).)")
 
         self.plaintext = plaintext
         if (plaintext != ""):
@@ -103,6 +105,32 @@ class HillCipher:
             
         return normalizedText  
     
+    @staticmethod
+    def determinantMatrix(m)->int:
+        """
+        Method to find matrix determinant.
+        
+        Return the determinant (mod 26). 
+        """
+
+        # Variable declaration.
+        det:int = 0
+        minor = [[0 for i in range (3)] for j in range (3)]
+
+        # Find minor entry matrix.
+        for i in range (3):
+            for j in range(3):
+                minor[i][j] = (m[(i+1)%3][(j+1)%3] * m[(i+2)%3][(j+2)%3] - m[(i+1)%3][(j+2)%3] * m[(i+2)%3][(j+1)%3])
+        
+        # Find determinant.
+        for i in range (3):
+            det += m[0][i]*minor[0][i]
+        
+        # Find modular inverse determinant.
+        det %= 26
+
+        return det
+
     def encrypt(self)->str:
         """
         Method to encrypt current plaintext with current key. Modify ciphertext attribute also
@@ -161,9 +189,6 @@ class HillCipher:
         
         # Find modular inverse determinant.
         det %= 26
-        if (not relativePrime(det, 26)):
-            raise Exception("m must be relative prime with 26, eg (1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25).)")
-            
         detInverse = modularInverse(det, 26)
 
         # Find modular inverse matrix
@@ -189,8 +214,8 @@ class HillCipher:
 
 
 # Test for Hill.
-a = "paymoremoney"
-b = "JWJNMLSEQPIB"
-m = [[1,2,8],[6,4,4],[2,8,9]]
-d = HillCipher(m=m, plaintext="", ciphertext=b)
-print(d.decrypt())
+# a = "paymoremoney"
+# b = "JWJNMLSEQPIB"
+# m = [[1,2,8],[6,4,4],[2,8,9]]
+# d = HillCipher(m=m, plaintext="", ciphertext=b)
+# print(d.decrypt())
