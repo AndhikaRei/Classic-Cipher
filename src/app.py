@@ -470,7 +470,7 @@ def hillDecrypt():
 			ciphertext = request.form['ciphertext']
 			# Process Decrypt Hill Cipher.
 			hill = HillCipher(m=matrixKey, ciphertext=ciphertext)
-			
+			hill.decrypt()
 			# Render successfull webpage with data.
 			return render_template('pages/hill-cipher.html', encrypt=False, result_plaintext = hill, 
 				form = request.form)

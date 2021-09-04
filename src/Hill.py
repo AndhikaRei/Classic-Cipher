@@ -38,7 +38,7 @@ class HillCipher:
         if (m == None):
             raise Exception("Key must be filled!")
         if (not relativePrime(self.determinantMatrix(m), 26)):
-            raise Exception("m must be relative prime with 26, eg (1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25).)")
+            raise Exception("matrix determinant must be relative prime with 26, eg (1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25).)")
 
         self.plaintext = plaintext
         if (plaintext != ""):
@@ -189,6 +189,7 @@ class HillCipher:
         # Find modular inverse determinant.
         det %= 26
         detInverse = modularInverse(det, 26)
+        print(detInverse)
 
         # Find modular inverse matrix
         for i in range (3):
