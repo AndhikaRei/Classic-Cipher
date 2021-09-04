@@ -44,7 +44,6 @@ class HillCipher:
         if (plaintext != ""):
             self.plaintext = self.normalizeText(plaintext)
 
-        ciphertext = ciphertext.lower()
         self.ciphertext = ciphertext
         if (ciphertext != ""):
             self.ciphertext = self.normalizeText(ciphertext)

@@ -47,12 +47,10 @@ class PlayfairCipher:
         if (plaintext != ""):
             self.plaintext = self.normalizeText(plaintext)
 
-        ciphertext = ciphertext.lower() # ini buat apa ya? bknya udh di lower di normalizeText?
         self.ciphertext = ciphertext
         if (ciphertext != ""):
             self.ciphertext = self.normalizeText(ciphertext)
         
-        key = key.lower() # ini juga
         self.key = key
         if (key != ""):
             self.key = self.normalizeKey(key)
