@@ -9,6 +9,17 @@
 
 *Semester I Tahun 2021/2022*
 
+## Description
+Sebuah program dalam bahasa Python berbasis web dengan framework flask yang mengimplementasikan:
+1. Vigenere Cipher standard (26 huruf alfabet
+2. Varian Vigenere Cipher (26 huruf alfabet): 
+   * Full Vigenere Cipher
+   * Auto-key Vigenere Cipher)
+3. Extended Vigenere Cipher (256 karakter ASCII)
+4. Playfair Cipher (26 huruf alfabet)
+5. Affine cipher (26 huruf alfabet)
+6. Hill cipher (26 huruf alfabet).
+   
 ## Author
 1. Reihan Andhika Putra (13519043)
 2. Ryo Richardo		    ( 13519193)
@@ -45,10 +56,14 @@ python app.py
 ```
 Then open your web browser and go to [localhost:5000](http://localhost:5000)
 
-## Screen Capture Vigenere Cipher
-## Screen Capture Full Vigenere Cipher
-## Screen Capture Auto-key Vigenere Cipher
-## Screen Capture Extended Vigenere Cipher
-## Screen Capture Playfair Cipher
-## Screen Capture Affine Cipher
-## Screen Capture Hill Cipher
+## Screen Capture 
+### Vigenere Cipher
+![Screenshot](img/Vigenere.png)
+### Full Vigenere Cipher
+![Screenshot](img/Full-Vigenere.png)
+### Extended Vigenere Cipher
+![Screenshot](img/Extended-Vigenere.png)
+### Affine Cipher
+![Screenshot](img/Affine.png)
+### Capture Hill Cipher
+![Screenshot](img/Hill.png)
