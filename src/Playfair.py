@@ -1,6 +1,7 @@
 import re
 import random
 from typing import List
+from collections import OrderedDict 
 
 # 
 # alphabets is a string that represent all Indonesia alphabet.
@@ -47,12 +48,10 @@ class PlayfairCipher:
         if (plaintext != ""):
             self.plaintext = self.normalizeText(plaintext)
 
-        ciphertext = ciphertext.lower() # ini buat apa ya? bknya udh di lower di normalizeText?
         self.ciphertext = ciphertext
         if (ciphertext != ""):
             self.ciphertext = self.normalizeText(ciphertext)
         
-        key = key.lower() # ini juga
         self.key = key
         if (key != ""):
             self.key = self.normalizeKey(key)
@@ -224,11 +223,11 @@ class PlayfairCipher:
         # Remove number, punctuation, and space.
         normalizedKey = "".join(filter(str.isalpha, key)).lower()
 
-        # Remove duplicates string
-        normalizedKey = "".join(set(normalizedKey))
-
         # Remove char "j"
-        normalizedKey.replace("j", "")
+        normalizedKey = normalizedKey.replace("j", "")
+
+        # Remove duplicates string
+        normalizedKey = "".join(OrderedDict.fromkeys(normalizedKey))
 
         # Complete the key with the rest of alphabet
         for letter in alphabets:
@@ -264,8 +263,8 @@ class PlayfairCipher:
 
 # # Test for normal.
 # a = "temui ibu nanti malam"
-# b = "alngeshpubcdfikmoqrtvwxyz"
-# c = "ZB RS FY KU PG LG RK VS NL QV"
-# d = PlayfairCipher(key=b, ciphertext=c)
+b = "pisang jambu"
+c = "DFRPNFOANLLMYUESAGHCQVOPUIIQOH"
+d = PlayfairCipher(key=b, ciphertext=c)
 # # print(d.generateBasicPlayfairTable())
-# print(d.decrypt())
+print(d.decrypt())
