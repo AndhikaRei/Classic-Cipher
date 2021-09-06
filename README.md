@@ -30,7 +30,7 @@ Sebuah program dalam bahasa Python berbasis web dengan framework flask yang meng
 ## Installation And Run
 Clone the repository
 ```bash
-git clone https://github.com/hokkyss/Stima03_OTOBOT.git
+git clone https://github.com/AndhikaRei/Classic-Cipher.git
 cd src
 ```
 ### Automatic Setup
